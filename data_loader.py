@@ -3,6 +3,7 @@ import re
 from tqdm import tqdm
 import pandas as pd
 from typing import Dict, List, Tuple
+from config import BASE_DIR
 
 # -- Constants --
 REQUIRED_COLUMNS = {
@@ -59,9 +60,8 @@ def read_data_from_generated_folder(folder_number: int) -> Dict[str, pd.DataFram
     """
     Read CSVs from a specific Generated Data folder.
     """
-    base_folder = '/Users/sarpvulas/Datasets/energynetdata/icc_combined'
     folder_name = f"Generated Data - {folder_number}"
-    folder_path = os.path.join(base_folder, folder_name)
+    folder_path = os.path.join(BASE_DIR, folder_name)
 
     if not os.path.exists(folder_path):
         raise FileNotFoundError(f"Folder '{folder_path}' does not exist.")
@@ -113,11 +113,10 @@ def read_all_generated_data(verbose: bool = True, fraction: float = 1.0) -> Tupl
     Returns:
         Tuple[dict, dict]: all_data, monthly_balances
     """
-    base_folder = '/Users/sarpvulas/Datasets/energynetdata/icc_combined'
     all_data: Dict[int, Dict[str, pd.DataFrame]] = {}
     monthly_balances: Dict[int, pd.DataFrame] = {}
 
-    folder_names = sorted(os.listdir(base_folder))
+    folder_names = sorted(os.listdir(BASE_DIR))
     folder_matches = [re.match(r"Generated Data - (\d+)", name) for name in folder_names]
     folder_numbers = [int(m.group(1)) for m in folder_matches if m]
 
