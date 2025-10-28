@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Artifacts and datasets
+artifacts/
+visualization/
+metrics/
+predictions/
+models/*.cbm
+catboost_info/
+
+# Logs
+results/*/logs.txt
+
+
+
+
+

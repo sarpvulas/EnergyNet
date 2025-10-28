@@ -25,6 +25,7 @@ import pandas as pd
 
 # ───────────────────────── helper: add column ─────────────────────────
 
+
 def add_to_grid_prices(df: pd.DataFrame, col: str = "Electricity_price_watt") -> pd.DataFrame:
     """Return *df* with a new/updated column ``to_grid_prices`` = ``col`` / 3."""
     if col not in df.columns:
@@ -32,14 +33,18 @@ def add_to_grid_prices(df: pd.DataFrame, col: str = "Electricity_price_watt") ->
     df["to_grid_prices"] = df[col] / 3.0
     return df
 
+
 # ───────────────────── default data directory logic ───────────────────
 
 _DEFAULT_PATH = Path("/Users/sarpvulas/Datasets/energynetdata/icc_combined")
 
+
 def default_data_dir() -> Path:
     return Path(os.getenv("ENERGENET_DATA_DIR", _DEFAULT_PATH))
 
+
 # ───────────────────────── housekeeping helpers ──────────────────────
+
 
 def delete_priced_files(root: Path) -> None:
     """Remove every *_priced.csv under *root* (recursive)."""
@@ -57,10 +62,14 @@ def collect_house_csvs(root: Path) -> list[Path]:
     csv_paths: list[Path] = []
     for gd in root.rglob("*"):
         if gd.is_dir() and re.match(r"Generated Data - \d+", gd.name):
-            csv_paths.extend([p for p in gd.glob("house*.csv") if p.is_file() and "_priced" not in p.stem])
+            csv_paths.extend(
+                [p for p in gd.glob("house*.csv") if p.is_file() and "_priced" not in p.stem]
+            )
     return csv_paths
 
+
 # ───────────────────────── file processing ───────────────────────────
+
 
 def process_file(path: Path) -> None:
     try:
@@ -81,7 +90,9 @@ def process_file(path: Path) -> None:
     except Exception as exc:
         print(f"❌  Failed to write {path}: {exc}")
 
+
 # ─────────────────────────────── main ────────────────────────────────
+
 
 def main(argv: list[str] | None = None) -> None:
     # positional argument: optional root directory
@@ -102,6 +113,7 @@ def main(argv: list[str] | None = None) -> None:
 
     for csv in csv_files:
         process_file(csv)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

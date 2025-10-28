@@ -1,0 +1,3 @@
+[console_scripts]
+energynet-barter = energynet.barter_sim.cli:main
+energynet-viewer = energynet.viewer.main:main
